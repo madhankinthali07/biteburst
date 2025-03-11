@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bite Burst - Order Up Happiness</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .hidden {
+            display: none;
+        }
+        .login-bg {
+            background-image: url('./bbimage.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .glass-effect {
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            padding-left: 2.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .input-group i {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+        .input-group input:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Login Page -->
+    <div id="loginPage" class="min-h-screen login-bg relative">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        
+        <!-- Content -->
+        <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="w-full max-w-md">
+                <!-- Logo Section -->
+                <div class="text-center mb-8 animate-fadeIn" style="animation-delay: 0.2s">
+                    <div class="inline-block p-4 rounded-full bg-white shadow-xl mb-4">
+                        <i data-lucide="utensils" class="w-12 h-12 text-green-600"></i>
+                    </div>
+                    <h1 class="text-4xl font-bold text-white mb-2">Bite Burst</h1>
+                    <p class="text-green-100 text-lg">Order Up Happiness</p>
+                </div>
+
+                <!-- Login Form -->
+                <div class="glass-effect rounded-2xl shadow-2xl p-8 animate-fadeIn" style="animation-delay: 0.4s">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Welcome Back</h2>
+                    <form id="loginForm" class="space-y-6">
+                        <div class="input-group">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                            <input type="email" required placeholder="Enter your email"
+                                class="focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div class="input-group">
+                            <i data-lucide="lock" class="w-5 h-5"></i>
+                            <input type="password" required placeholder="Enter your password"
+                                class="focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div class="flex items-center justify-between mb-6">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded border-gray-300 text-green-600 shadow-sm focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50">
+                                <span class="ml-2 text-sm text-gray-700">Remember me</span>
+                            </label>
+                            <a href="#" class="text-sm text-green-600 hover:text-green-700">Forgot password?</a>
+                        </div>
+                        <button type="submit"
+                            class="w-full btn-gradient text-white py-3 rounded-lg font-semibold shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                            Sign In
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="text-center mt-6 text-white animate-fadeIn" style="animation-delay: 0.6s">
+                    <p class="text-sm">Don't have an account? <a href="#" class="text-green-400 hover:text-green-300">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" class="hidden">
+        <!-- Header -->
+        <header class="bg-white shadow-md">
+            <div class="container mx-auto px-4 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <h1 class="text-2xl font-bold text-green-600">Bite Burst</h1>
+                        <nav class="hidden md:flex space-x-4">
+                            <button onclick="showSection('home')" class="flex items-center space-x-1 text-green-600">
+                                <i data-lucide="home"></i>
+                                <span>Home</span>
+                            </button>
+                            <button onclick="showSection('settings')" class="flex items-center space-x-1 text-gray-600">
+                                <i data-lucide="settings"></i>
+                                <span>Settings</span>
+                            </button>
+                        </nav>
+                    </div>
+                    <button onclick="logout()" class="flex items-center space-x-2 text-gray-600 hover:text-red-600">
+                        <i data-lucide="log-out"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="container mx-auto px-4 py-8">
+            <!-- Home Section -->
+            <div id="homeSection">
+                <!-- Main Options -->
+                <div id="mainOptions" class="grid md:grid-cols-2 gap-8 mb-8">
+                    <button onclick="showConsultation()" class="bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-4xl text-green-600 mb-4">
+                            <i data-lucide="stethoscope" class="mx-auto"></i>
+                        </div>
+                        <h2 class="text-2xl font-semibold mb-2">Consult Doctor</h2>
+                        <p class="text-gray-600">Get professional medical consultation for your health concerns</p>
+                    </button>
+                    <button onclick="showNutrition()" class="bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-4xl text-green-600 mb-4">
+                            <i data-lucide="apple" class="mx-auto"></i>
+                        </div>
+                        <h2 class="text-2xl font-semibold mb-2">Nutrition Plan</h2>
+                        <p class="text-gray-600">View and order your personalized nutrition plan</p>
+                    </button>
+                </div>
+
+                <!-- Detailed Sections (Initially Hidden) -->
+                <div id="consultationSection" class="hidden">
+                    <button onclick="backToOptions()" class="mb-4 flex items-center text-gray-600 hover:text-green-600">
+                        <i data-lucide="arrow-left" class="mr-2"></i>
+                        Back to Options
+                    </button>
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h2 class="text-2xl font-semibold mb-4">Consult Doctor</h2>
+                        <div id="consultationForm">
+                            <form onsubmit="bookAppointment(event)" class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Describe your problem</label>
+                                    <textarea required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" rows="4"></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Preferred Date</label>
+                                    <input type="date" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Preferred Time Slot</label>
+                                    <select required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                                        <option value="">Select a time slot</option>
+                                        <option value="morning">Morning (9 AM - 12 PM)</option>
+                                        <option value="afternoon">Afternoon (2 PM - 5 PM)</option>
+                                        <option value="evening">Evening (6 PM - 9 PM)</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                    Book Appointment
+                                </button>
+                            </form>
+                        </div>
+                        <div id="appointmentSuccess" class="hidden text-center py-8">
+                            <div class="text-green-600 text-xl mb-4">Your appointment has been booked successfully!</div>
+                            <button onclick="completeConsultation()" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                                Mark Consultation as Complete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="nutritionSection" class="hidden">
+                    <button onclick="backToOptions()" class="mb-4 flex items-center text-gray-600 hover:text-green-600">
+                        <i data-lucide="arrow-left" class="mr-2"></i>
+                        Back to Options
+                    </button>
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h2 class="text-2xl font-semibold mb-4">Nutrition Plan</h2>
+                        <div id="nutritionPending" class="text-center py-8 text-gray-600">
+                            Please complete your doctor consultation first to view your nutrition plan.
+                        </div>
+                        <div id="nutritionPlan" class="hidden space-y-4">
+                            <div class="border rounded-lg p-4">
+                                <h3 class="text-lg font-medium mb-2">Breakfast</h3>
+                                <div class="text-gray-600 mb-3">Oatmeal with fruits and nuts</div>
+                                <button onclick="placeOrder(this)" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                                    Place Order
+                                </button>
+                            </div>
+                            <div class="border rounded-lg p-4">
+                                <h3 class="text-lg font-medium mb-2">Lunch</h3>
+                                <div class="text-gray-600 mb-3">Grilled chicken with quinoa and vegetables</div>
+                                <button onclick="placeOrder(this)" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                                    Place Order
+                                </button>
+                            </div>
+                            <div class="border rounded-lg p-4">
+                                <h3 class="text-lg font-medium mb-2">Snacks</h3>
+                                <div class="text-gray-600 mb-3">Greek yogurt with honey</div>
+                                <button onclick="placeOrder(this)" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                                    Place Order
+                                </button>
+                            </div>
+                            <div class="border rounded-lg p-4">
+                                <h3 class="text-lg font-medium mb-2">Dinner</h3>
+                                <div class="text-gray-600 mb-3">Baked fish with sweet potato</div>
+                                <button onclick="placeOrder(this)" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                                    Place Order
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settingsSection" class="hidden">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-2xl font-semibold mb-4">Settings</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="user" class="text-gray-600"></i>
+                            <span>Profile Settings</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="bell" class="text-gray-600"></i>
+                            <span>Notifications</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="shield" class="text-gray-600"></i>
+                            <span>Privacy & Security</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white mt-12">
+            <div class="container mx-auto px-4 py-8">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4">Bite Burst</h3>
+                        <p class="text-gray-300">Order Up Happiness</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4">Contact Us</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="map-pin"></i>
+                                <span>123 Health Street, Wellness City</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="phone"></i>
+                                <span>+1 234 567 8900</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="mail"></i>
+                                <span>contact@biteburst.com</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4">Hours</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="clock"></i>
+                                <span>Mon-Fri: 9:00 AM - 9:00 PM</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="calendar"></i>
+                                <span>Sat-Sun: 10:00 AM - 6:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Login functionality
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+        });
+
+        // Logout functionality
+        function logout() {
+            document.getElementById('mainApp').classList.add('hidden');
+            document.getElementById('loginPage').classList.remove('hidden');
+            resetAllSections();
+        }
+
+        // Section navigation
+        function showSection(section) {
+            document.getElementById('homeSection').classList.add('hidden');
+            document.getElementById('settingsSection').classList.add('hidden');
+            
+            if (section === 'home') {
+                document.getElementById('homeSection').classList.remove('hidden');
+                showMainOptions();
+            } else if (section === 'settings') {
+                document.getElementById('settingsSection').classList.remove('hidden');
+            }
+        }
+
+        // Show main options
+        function showMainOptions() {
+            document.getElementById('mainOptions').classList.remove('hidden');
+            document.getElementById('consultationSection').classList.add('hidden');
+            document.getElementById('nutritionSection').classList.add('hidden');
+        }
+
+        // Show consultation section
+        function showConsultation() {
+            document.getElementById('mainOptions').classList.add('hidden');
+            document.getElementById('consultationSection').classList.remove('hidden');
+        }
+
+        // Show nutrition section
+        function showNutrition() {
+            document.getElementById('mainOptions').classList.add('hidden');
+            document.getElementById('nutritionSection').classList.remove('hidden');
+        }
+
+        // Back to main options
+        function backToOptions() {
+            showMainOptions();
+        }
+
+        // Book appointment
+        function bookAppointment(e) {
+            e.preventDefault();
+            document.getElementById('consultationForm').classList.add('hidden');
+            document.getElementById('appointmentSuccess').classList.remove('hidden');
+        }
+
+        // Complete consultation
+        function completeConsultation() {
+            document.getElementById('nutritionPending').classList.add('hidden');
+            document.getElementById('nutritionPlan').classList.remove('hidden');
+            showMainOptions();
+        }
+
+        // Place order
+        function placeOrder(button) {
+            button.textContent = 'Order placed successfully!';
+            button.disabled = true;
+            button.classList.remove('bg-green-600', 'hover:bg-green-700');
+            button.classList.add('bg-gray-400');
+        }
+
+        // Reset all sections
+        function resetAllSections() {
+            document.getElementById('consultationForm').classList.remove('hidden');
+            document.getElementById('appointmentSuccess').classList.add('hidden');
+            document.getElementById('nutritionPending').classList.remove('hidden');
+            document.getElementById('nutritionPlan').classList.add('hidden');
+            showMainOptions();
+        }
+
+        // Show home section by default
+        showSection('home');
+    </script>
+</body>
+</html>
